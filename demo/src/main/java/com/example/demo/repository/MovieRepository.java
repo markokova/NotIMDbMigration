@@ -3,6 +3,8 @@ package com.example.demo.repository;
 //import java.io.*;
 import java.sql.*;
 
+import com.example.demo.common.ConnectionHelper;
+
 public class MovieRepository {
 	
 	public String getMovies() throws Exception {
@@ -19,27 +21,17 @@ public class MovieRepository {
 //                "LEFT JOIN \"Actor\" a ON a.\"Id\" = am.\"ActorId\" " +
 //                "LEFT JOIN \"Review\" r ON r.\"MovieId\" = m.\"Id\" " +
 //                "LEFT JOIN \"WatchList\" wl ON wl.\"MovieId\" = m.\"Id\" ";
+		
 		StringBuilder resultStr = new StringBuilder();
-
 		String query = "SELECT * FROM \"Movie\"";
 				
-		String url = "jdbc:postgresql://localhost:5432/postgres";
-		String username = "postgres";
-		String password = "postgres";
-		try {
-			Class.forName("org.postgresql.Driver");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Connection con = null;
-		
-		con = DriverManager.getConnection(url, username, password);
+		Connection con = ConnectionHelper.getConnection();
+
 		Statement st = con.createStatement();
 		ResultSet result = st.executeQuery(query);
 		while(result.next()) {
 			String title = result.getString("Title");
-			resultStr.append(title);
+			resultStr.append(title + " ");
 		}
 		
 		con.close();

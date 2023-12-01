@@ -17,4 +17,6 @@ public class MovieController {
 		String result = _movieRepository.getMovies();
 		return result;
 	}
+	
+	
 }
