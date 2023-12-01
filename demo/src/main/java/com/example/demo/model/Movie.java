@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,11 +15,11 @@ public class Movie {
     public List<UUID> GenreIds; 
     public boolean IsActive  = true;
     public double AverageScore; 
-    public DateTime YearOfRelease; 
+    public Date YearOfRelease; 
     public UUID CreatedByUserId; 
     public UUID UpdatedByUserId;
     public DateTime DateCreated; 
-    public DateTime DateUpdated;
+    public Date DateUpdated;
     
 	public UUID getId() {
 		return Id;
@@ -68,11 +69,11 @@ public class Movie {
 	public void setAverageScore(double averageScore) {
 		AverageScore = averageScore;
 	}
-	public DateTime getYearOfRelease() {
+	public Date getYearOfRelease() {
 		return YearOfRelease;
 	}
-	public void setYearOfRelease(DateTime yearOfRelease) {
-		YearOfRelease = yearOfRelease;
+	public void setYearOfRelease(Date date) {
+		YearOfRelease = date;
 	}
 	public UUID getCreatedByUserId() {
 		return CreatedByUserId;
@@ -92,11 +93,11 @@ public class Movie {
 	public void setDateCreated(DateTime dateCreated) {
 		DateCreated = dateCreated;
 	}
-	public DateTime getDateUpdated() {
+	public Date getDateUpdated() {
 		return DateUpdated;
 	}
-	public void setDateUpdated(DateTime dateUpdated) {
-		DateUpdated = dateUpdated;
+	public void setDateUpdated(Date date) {
+		DateUpdated = date;
 	}
 }
 
