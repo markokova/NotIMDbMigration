@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.util.Date;
 import java.util.UUID;
 
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression.DateTime;
@@ -11,6 +12,13 @@ public class Review {
     public String Content;
     public int Score;
     public UUID MovieId;
+	public boolean IsActive;
+    public UUID CreatedByUserId;
+    public UUID UpdatedByUserId;
+    public Date DateCreated;
+    public Date DateUpdated;
+    public Movie Movie;
+    public User User;
     
     public UUID getId() {
 		return Id;
@@ -60,16 +68,16 @@ public class Review {
 	public void setUpdatedByUserId(UUID updatedByUserId) {
 		UpdatedByUserId = updatedByUserId;
 	}
-	public DateTime getDateCreated() {
+	public Date getDateCreated() {
 		return DateCreated;
 	}
-	public void setDateCreated(DateTime dateCreated) {
+	public void setDateCreated(Date dateCreated) {
 		DateCreated = dateCreated;
 	}
-	public DateTime getDateUpdated() {
+	public Date getDateUpdated() {
 		return DateUpdated;
 	}
-	public void setDateUpdated(DateTime dateUpdated) {
+	public void setDateUpdated(Date dateUpdated) {
 		DateUpdated = dateUpdated;
 	}
 	public Movie getMovie() {
@@ -84,11 +92,5 @@ public class Review {
 	public void setUser(User user) {
 		User = user;
 	}
-	public boolean IsActive;
-    public UUID CreatedByUserId;
-    public UUID UpdatedByUserId;
-    public DateTime DateCreated;
-    public DateTime DateUpdated;
-    public Movie Movie;
-    public User User;
+
 }

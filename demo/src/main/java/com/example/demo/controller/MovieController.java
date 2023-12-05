@@ -33,7 +33,6 @@ public class MovieController {
 		
 		List<MovieView> result = _movieRepository.getMovies(filter);
 		
-		//List<MovieView> result = new ArrayList<MovieView>();
 		return result;
 	}
 }
