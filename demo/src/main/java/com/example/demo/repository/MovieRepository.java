@@ -8,6 +8,12 @@ import java.util.UUID;
 
 import org.apache.logging.log4j.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -24,17 +30,21 @@ import com.example.demo.common.filter.MovieFilter;
 import com.example.demo.common.mapper.MovieViewMapper;
 import com.example.demo.model.Movie;
 import com.example.demo.model.MovieView;
+import com.example.demo.repository.common.IMovieRepository;
 
 import ch.qos.logback.core.joran.conditional.IfAction;
+import net.sf.jsqlparser.statement.select.Limit;
+
+import java.awt.print.*;
 
 @Repository
-public class MovieRepository {
+public class MovieRepository implements IMovieRepository{
 	
 	
 	@Autowired
 	JdbcTemplate jdbc;
-	
-	public List<MovieView> getMovies(MovieFilter filter) throws SQLException {
+		
+	public List<MovieView> getMovies(MovieFilter filter, Pageable pageable) throws SQLException {
 		
 		StringBuilder queryBuilder = new StringBuilder("""
 				SELECT DISTINCT m.\"Id\" AS \"MovieId\", m.\"Title\" AS \"MovieTitle\", m.\"Runtime\", m.\"YearOfRelease\", m.\"Image\",
@@ -51,15 +61,28 @@ public class MovieRepository {
 				LEFT JOIN \"WatchList\" wl ON wl.\"MovieId\" = m.\"Id\"
 				""");
 		
-		//TODO - moram pripremit statement, odnosno injektat parametre u query (parametar za filtriranje po genre)
-				
 		queryBuilder = filterResults(filter, queryBuilder);
+		queryBuilder = pageResults(pageable, queryBuilder);
 		
 		List<MovieView> moviesView = null;
-
-		moviesView = jdbc.query(queryBuilder.toString(), new MovieViewMapper(), filter.GenreId != null ? new Object[] { filter.GenreId } : new Object[] {});
-
-		//moviesView = jdbc.query(query, new MovieViewMapper(), genreId);
+		
+		if(filter.GenreId != null) {
+			moviesView = jdbc.query(
+					queryBuilder.toString(),
+					new MovieViewMapper(),
+					new Object[] { 
+							filter.GenreId,
+							pageable.getPageNumber() <= 1 ? 0 : pageable.getPageNumber() * pageable.getPageSize(),
+							pageable.getPageSize()});	
+		}else {
+			moviesView = jdbc.query(
+					queryBuilder.toString(), 
+					new MovieViewMapper(), 
+					new Object[] {
+							pageable.getPageNumber() <= 1 ? 0 : pageable.getPageNumber() * pageable.getPageSize(),
+							pageable.getPageSize()});
+				}
+	
 		return moviesView;
 	}
 	
@@ -75,6 +98,44 @@ public class MovieRepository {
 		
 		return builder;
 	}
+	
+	private StringBuilder pageResults(Pageable pageable, StringBuilder builder) {
+		if(pageable != null) {
+			builder.append(" OFFSET ?");
+			builder.append(" LIMIT ?");
+		}
+		return builder;
+	}
+
+	@Override
+	public Iterable<MovieView> findAll(Sort sort) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Page<MovieView> findAll(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+//	@Override
+//	public int createMovie(Movie movie) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+//
+//	@Override
+//	public int updateMovie(Movie movie) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+//
+//	@Override
+//	public int deleteMovie(UUID movieId) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
 	
 }
 

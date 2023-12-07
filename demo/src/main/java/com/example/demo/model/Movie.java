@@ -4,9 +4,12 @@ import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 
+import jakarta.persistence.*;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression.DateTime;
 
+@Entity
 public class Movie {
+	@Id
 	public UUID Id;
     public String Title; 
     public int Runtime; 
