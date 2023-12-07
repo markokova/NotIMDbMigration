@@ -16,9 +16,9 @@ public interface IMovieRepository extends PagingAndSortingRepository<MovieView, 
 	
 	List<MovieView> getMovies(MovieFilter filter, Pageable pageable) throws SQLException;
 	
-//	int createMovie(Movie movie);
-//	
-//	int updateMovie(Movie movie);
-//	
-//	int deleteMovie(UUID movieId);
+	int createMovie(Movie movie);
+	
+	int updateMovie(Movie movie);
+	
+	int deleteMovie(UUID movieId);
 }

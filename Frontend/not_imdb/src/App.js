@@ -14,9 +14,18 @@ import AdminGenreDashboard from './pages/AdminDasboard/AdminGenreDashboard';
 import AdminReviewDashboard from './pages/AdminDasboard/AdminReviewDashboard';
 import Reviews from "./pages/Reviews";
 import AdminUserDashboard from './pages/AdminDasboard/AdminUserDashboard';
+import Cookies from 'js-cookie';
 
 function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("loggedInUser")));
+  const cookie = Cookies.get('JSESSIONID');
+
+  if(cookie !== undefined){
+    const [user, setUser] = cookie;
+  } else{
+    console.log("Can't fetch token value from cookie.");
+  }
+  
 
   return (
     <Router>

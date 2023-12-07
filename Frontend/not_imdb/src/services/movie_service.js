@@ -138,7 +138,7 @@ export const handleDeleteMovie = (movieId) => {
     let header;
     if (user.token !== '') {
       header = {
-        'Authorization': `Bearer ${user.token}`
+        'Authorization': `Bearer ${user}`
       }
     }
     axios.post("https://localhost:44394/api/Watchlist/" + movieId, null, {headers:header}).then((response) => {

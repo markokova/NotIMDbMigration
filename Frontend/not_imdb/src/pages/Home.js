@@ -21,12 +21,12 @@ function Home(props){
             <h1>Welcome to NotIMDb!</h1>
             <div>
                 <h2>Watch now: </h2>
-                <MovieCard user = {props.user}/>
+                <MovieCard user = {props}/>
             </div>
             {genres.map((genre) => (
                 <div key={genre.Id}>
                     <h2 id="genreTitle">{genre.Title}</h2>
-                    <MovieCard genreId={genre.Id} user = {props.user}/>
+                    <MovieCard genreId={genre.Id} user = {props}/>
                 </div>
             ))}
         </div>

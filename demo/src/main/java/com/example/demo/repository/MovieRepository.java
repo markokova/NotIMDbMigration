@@ -119,23 +119,23 @@ public class MovieRepository implements IMovieRepository{
 		return null;
 	}
 
-//	@Override
-//	public int createMovie(Movie movie) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-//
-//	@Override
-//	public int updateMovie(Movie movie) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-//
-//	@Override
-//	public int deleteMovie(UUID movieId) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
+	@Override
+	public int createMovie(Movie movie) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateMovie(Movie movie) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteMovie(UUID movieId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }
 
